@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wenchao.database.User">
+
+	<resultMap id="BaseResultMap" type="com.wenchao.bean.MyUser">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="user_name" property="name" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="age" property="age" jdbcType="BIGINT" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, user_name, password, age
+	</sql>
+	<insert id="add" parameterType="com.wenchao.bean.MyUser" >
+	  insert into user_t (user_name, password, age)
+  	  values ( #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+     #{age,jdbcType=TINYINT})
+	</insert>
+	
+	<select id="query" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from user_t
+		where user_name = #{name,jdbcType=VARCHAR}
+	</select>
+	<delete id="delete" parameterType="java.lang.Long">
+		delete from user_t
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+
+
+
+
+</mapper>
